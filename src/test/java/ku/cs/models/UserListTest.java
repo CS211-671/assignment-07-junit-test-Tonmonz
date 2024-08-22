@@ -18,6 +18,15 @@ class UserListTest {
         // String expected = "<one of username>";
         // String actual = user.getUsername();
         // assertEquals(expected, actual);
+        UserList userList = new UserList();
+        userList.addUser("user1", "password1");
+        userList.addUser("user2", "password2");
+        userList.addUser("user3", "password3");
+
+        User user = userList.findUserByUsername("user2");
+
+        assertNotNull(user);
+        assertEquals("user2", user.getUsername());
     }
 
     @Test
@@ -29,6 +38,17 @@ class UserListTest {
 
         // TODO: assert that user can change password
         // assertTrue(actual);
+        UserList userList = new UserList();
+        userList.addUser("user1", "password1");
+        userList.addUser("user2", "password2");
+        userList.addUser("user3", "password3");
+
+        boolean result = userList.changePassword("user1", "password1", "newPassword1");
+
+        assertTrue(result);
+        User user = userList.findUserByUsername("user1");
+        assertNotNull(user);
+        assertEquals("newPassword1", user.getPassword());
     }
 
     @Test
@@ -40,6 +60,15 @@ class UserListTest {
 
         // TODO: assert that User object is found
         // assertEquals(expected, actual);
+        UserList userList = new UserList();
+        userList.addUser("user1", "password1");
+        userList.addUser("user2", "password2");
+        userList.addUser("user3", "password3");
+
+        User user = userList.login("user2", "password2");
+
+        assertNotNull(user);
+        assertEquals("user2", user.getUsername());
     }
 
     @Test
@@ -51,6 +80,14 @@ class UserListTest {
 
         // TODO: assert that the method return null
         // assertNull(actual);
+        UserList userList = new UserList();
+        userList.addUser("user1", "password1");
+        userList.addUser("user2", "password2");
+        userList.addUser("user3", "password3");
+
+        User user = userList.login("user1", "wrongPassword");
+
+        assertNull(user);
     }
 
 }
