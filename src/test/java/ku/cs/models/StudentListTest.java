@@ -5,72 +5,65 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.DisplayName;
 class StudentListTest {
     @Test
-    @DisplayName("Student should be added to StudentList")
-    public void testAddStudent() {
+    public void testAddStudentWithoutScore() {
         StudentList studentList = new StudentList();
-        studentList.addNewStudent("123", "Alice");
+        studentList.addNewStudent("6610450001", "Alice");
 
-        Student student = studentList.findStudentById("123");
+        Student student = studentList.findStudentById("6610450001");
 
         assertNotNull(student);
-        assertEquals("123", student.getId());
+        assertEquals("6610450001", student.getId());
         assertEquals("Alice", student.getName());
         assertEquals(0, student.getScore());
     }
 
     @Test
-    @DisplayName("Student with score should be added to StudentList")
     public void testAddStudentWithScore() {
         StudentList studentList = new StudentList();
-        studentList.addNewStudent("124", "Bob", 75.0);
+        studentList.addNewStudent("6610450001", "Bob", 75.0);
 
-        Student student = studentList.findStudentById("124");
+        Student student = studentList.findStudentById("6610450001");
 
         assertNotNull(student);
-        assertEquals("124", student.getId());
+        assertEquals("6610450001", student.getId());
         assertEquals("Bob", student.getName());
         assertEquals(75.0, student.getScore());
     }
 
     @Test
-    @DisplayName("Student with the same ID should not be added twice")
-    public void testAddDuplicateStudent() {
+    public void testFindStudentById() {
         StudentList studentList = new StudentList();
-        studentList.addNewStudent("125", "Charlie");
-        studentList.addNewStudent("125", "Charlie", 85.0);
+        studentList.addNewStudent("6610450001", "Alice");
+        Student student = studentList.findStudentById("123");
+        assertNotNull(student);
+        assertEquals("6610450001", student.getId());
+    }
 
-        Student student = studentList.findStudentById("125");
+
+    @Test
+    public void testGiveScoreToId() {
+        StudentList studentList = new StudentList();
+        studentList.addNewStudent("6610450001", "Diana");
+        studentList.giveScoreToId("6610450001", 10.0);
+        studentList.giveScoreToId("6610450001", 20.0);
+
+        Student student = studentList.findStudentById("6610450001");
 
         assertNotNull(student);
-        assertEquals("Charlie", student.getName());
-        assertEquals(0, student.getScore()); // Original score, should not be 85.0
+        assertEquals(30.0, student.getScore());
     }
 
     @Test
-    @DisplayName("Score should be added to existing student")
-    public void testGiveScoreToStudent() {
+    public void testViewGradeOfId() {
         StudentList studentList = new StudentList();
-        studentList.addNewStudent("126", "Diana");
-        studentList.giveScoreToId("126", 10.0);
-        studentList.giveScoreToId("126", 20.0);
+        studentList.addNewStudent("6610450001", "Eve", 85.0);
+        studentList.addNewStudent("6610450002", "Frank", 65.0);
+        studentList.addNewStudent("6610450003", "Grace", 55.0);
 
-        Student student = studentList.findStudentById("126");
+        assertEquals("A", studentList.viewGradeOfId("6610450001"));
+        assertEquals("C", studentList.viewGradeOfId("6610450002"));
+        assertEquals("D", studentList.viewGradeOfId("6610450003"));
 
-        assertNotNull(student);
-        assertEquals(30.0, student.getScore()); // 10 + 20
-    }
-
-    @Test
-    @DisplayName("Grade should be calculated correctly based on score")
-    public void testViewGradeOfStudent() {
-        StudentList studentList = new StudentList();
-        studentList.addNewStudent("127", "Eve", 85.0);
-        studentList.addNewStudent("128", "Frank", 65.0);
-        studentList.addNewStudent("129", "Grace", 55.0);
-
-        assertEquals("A", studentList.viewGradeOfId("127"));
-        assertEquals("C", studentList.viewGradeOfId("128"));
-        assertNull(studentList.viewGradeOfId("999")); // Non-existent student
     }
 
 

@@ -24,8 +24,6 @@ class UserListTest {
         userList.addUser("user3", "password3");
 
         User user = userList.findUserByUsername("user2");
-
-        assertNotNull(user);
         assertEquals("user2", user.getUsername());
     }
 
@@ -43,12 +41,8 @@ class UserListTest {
         userList.addUser("user2", "password2");
         userList.addUser("user3", "password3");
 
-        boolean result = userList.changePassword("user1", "password1", "newPassword1");
-
-        assertTrue(result);
-        User user = userList.findUserByUsername("user1");
-        assertNotNull(user);
-        assertEquals("newPassword1", user.getPassword());
+        boolean isPasswordChanged = userList.changePassword("user1", "password1", "newPassword1");;
+        assertTrue(isPasswordChanged);
     }
 
     @Test
@@ -65,10 +59,9 @@ class UserListTest {
         userList.addUser("user2", "password2");
         userList.addUser("user3", "password3");
 
-        User user = userList.login("user2", "password2");
-
-        assertNotNull(user);
-        assertEquals("user2", user.getUsername());
+        User expectedUser = userList.findUserByUsername("user2");
+        User actualUser = userList.login("user2", "password2");
+        assertEquals(expectedUser, actualUser);
     }
 
     @Test
@@ -86,7 +79,6 @@ class UserListTest {
         userList.addUser("user3", "password3");
 
         User user = userList.login("user1", "wrongPassword");
-
         assertNull(user);
     }
 

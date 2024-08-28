@@ -32,5 +32,16 @@ class StudentTest {
         assertEquals(true, s1.isId("6610450001"));
     }
 
+    @Test
+    void  testChangeName(){
+        Student s1 = new Student("6610450001", "StudentTest");
+        s1.changeName("StudentTest2");
+        assertEquals("StudentTest2", s1.getName());
+    }
+    @Test
+    void  testIsId(){
+        Student s1 = new Student("6610450001", "StudentTest");
+        assertEquals(true, s1.isId("6610450001"));
+    }
 
 }
